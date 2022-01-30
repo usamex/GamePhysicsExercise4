@@ -29,7 +29,7 @@ using namespace GamePhysics;
 #include "TemplateSimulator.h"
 #endif
 #ifdef MASS_SPRING_SYSTEM
-#include "MassSpringSystemSimulator.h"
+#include "Exercise4.h"
 #endif
 #ifdef RIGID_BODY_SYSTEM
 //#include "RigidBodySystemSimulator.h"
@@ -362,7 +362,7 @@ int main(int argc, char* argv[])
 	g_pSimulator= new TemplateSimulator();
 #endif
 #ifdef MASS_SPRING_SYSTEM
-	g_pSimulator= new MassSpringSystemSimulator();
+	g_pSimulator= new Exercise4();
 #endif
 #ifdef RIGID_BODY_SYSTEM
 	//g_pSimulator= new RigidBodySystemSimulator();
