@@ -5,6 +5,9 @@
 #include "BaseObject.h"
 #include "DrawingUtilitiesClass.h"
 
+#define EULER 0
+#define MIDPOINT 1
+#define LEAPFROG 2
 
 class RigidBody : public BaseObject
 {
@@ -21,27 +24,42 @@ public:
 		initInertiaInv();
 	}
 	void initInertiaInv();
-	void resetForce();
+	void resetForce() override;
 	void applyForce(GamePhysics::Vec3 loc, GamePhysics::Vec3 force);
-	double mass() const;
+	void update(float timeStep, int integrator, bool _addGravity);
+
 	Vec3 size() const;
 	Vec3 torque() const;
 	Vec3 angularVel() const;
 	Vec3 angularMom() const;
 	Quat angularVelQuat() const;
 	Quat orientation() const;
-	void size(Vec3 size);
-	void torque(Vec3 torque);
-	void angularVel(Vec3 angularVel);
-	void angularMom(Vec3 angularMom);
-	void orientation(Quat orientation);
 	Mat4 scaleMatrix() const;
 	Mat4 rotationMatrix() const;
 	Mat4 translationMatrix() const;
 	Mat4 obj2World() const;
 	Mat4 inertiaTensorInv() const;
+	double mass() const;
+
+	void addGravity(float factor = 10.0f) override;
+
+	void size(Vec3 size);
+	void torque(Vec3 torque);
+	void angularVel(Vec3 angularVel);
+	void angularMom(Vec3 angularMom);
+	void orientation(Quat orientation);
+
+	double distTo(RigidBody& other);
+	Vec3 directionTo(RigidBody& other);
 
 	void draw(DrawingUtilitiesClass* DUC);
+
+private:
+	void eulerUpdate(float timeStep);
+	void fullStepUpdate(float timeStep);
+
+	Vec3 _oldPosition;
+	Vec3 _oldVelocity;
 };
 
 

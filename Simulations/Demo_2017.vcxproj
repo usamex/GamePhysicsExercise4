@@ -227,10 +227,10 @@
     <ClCompile Include="TemplateSimulator.cpp" />
     <ClCompile Include="util\FFmpeg.cpp" />
     <ClCompile Include="util\util.cpp" />
-    <ClCompile Include="MassSpringSystem.cpp"/>
-    <ClCompile Include="Exercise4.cpp"/>
-    <ClCompile Include="RigidBody.cpp"/>
-    <ClCompile Include="main.cpp"/>
+    <ClCompile Include="MassSpringSystem.cpp" />
+    <ClCompile Include="Exercise4.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrawingUtilitiesClass.h" />

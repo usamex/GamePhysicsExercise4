@@ -32,12 +32,12 @@ public:
 	void position(Vec3 position);
 	void velocity(Vec3 velocity);
 	void addForce(Vec3 f);
-	void addGravity(float factor = 10.0f);
 	void tag(std::string tag);
 	void mass(double mass);
 	void fixed(bool fixed);
+	
+	virtual void addGravity(float factor = 10.0f);
 	virtual void resetForce();
-
 	virtual void draw(DrawingUtilitiesClass* DUC) = 0;
 };
 

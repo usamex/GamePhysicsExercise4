@@ -11,6 +11,10 @@ void RigidBody::initInertiaInv()
 		0, 0, 0, 1).inverse();
 }
 
+void RigidBody::addGravity(float factor) {
+	applyForce(position(), Vec3(0, -10 * _mass, 0));
+}
+
 void RigidBody::resetForce()
 {
 	BaseObject::resetForce();
@@ -57,4 +61,47 @@ Mat4 RigidBody::inertiaTensorInv() const
 	Mat4 rotMatT = rotationMatrix();
 	rotMatT.transpose();
 	return rotationMatrix() * _inertiaTensorInv * rotMatT;
+}
+
+double RigidBody::distTo(RigidBody& other)
+{
+	return std::sqrt(position().squaredDistanceTo(other.position()));
+}
+
+Vec3 RigidBody::directionTo(RigidBody& other)
+{
+	return getNormalized(position() - other.position());
+}
+
+void RigidBody::eulerUpdate(float timeStep) {
+	_oldPosition = position();
+	_oldVelocity = velocity();
+
+	position(position() + velocity() * timeStep);
+	velocity(velocity() + force() / mass() * timeStep); // acceleration * timeStep
+}
+
+void RigidBody::fullStepUpdate(float timeStep) { // for midpoint
+	position(_oldPosition + velocity() * timeStep);
+	velocity(_oldVelocity + force() / mass() * timeStep); // acceleration * timeStep
+}
+
+void RigidBody::update(float timeStep, int integrator, bool _addGravity) {
+	if (fixed()) return;
+
+	if (_addGravity) addGravity();
+
+	switch (integrator)
+	{
+	case EULER: eulerUpdate(timeStep); break;
+	case MIDPOINT: fullStepUpdate(timeStep); break;
+	default: eulerUpdate(timeStep); break;
+	}
+
+	// update orientation quaternion
+	orientation(orientation() + (timeStep / 2.f) * angularVelQuat() * orientation());
+	angularMom(angularMom() + timeStep * torque());
+	angularVel(inertiaTensorInv() * angularMom());
+
+	resetForce();
 }

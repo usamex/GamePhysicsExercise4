@@ -20,22 +20,26 @@ using namespace GamePhysics;
 
 //#define ADAPTIVESTEP
 
-#define TEMPLATE_DEMO
+//#define TEMPLATE_DEMO
 //#define MASS_SPRING_SYSTEM
 //#define RIGID_BODY_SYSTEM
 //#define SPH_SYSTEM
+#define EXERCISE4
 
 #ifdef TEMPLATE_DEMO
 #include "TemplateSimulator.h"
 #endif
 #ifdef MASS_SPRING_SYSTEM
-#include "Exercise4.h"
+//#include "MassSpringSystemDemo.h"
 #endif
 #ifdef RIGID_BODY_SYSTEM
 //#include "RigidBodySystemSimulator.h"
 #endif
 #ifdef SPH_SYSTEM
 //#include "SPHSystemSimulator.h"
+#endif
+#ifdef EXERCISE4
+#include "Exercise4.h"
 #endif
 
 DrawingUtilitiesClass * g_pDUC;
@@ -369,6 +373,9 @@ int main(int argc, char* argv[])
 #endif
 #ifdef SPH_SYSTEM
 	//g_pSimulator= new SPHSystemSimulator();
+#endif
+#ifdef EXERCISE4
+	g_pSimulator= new Exercise4();
 #endif
 	g_pSimulator->reset();
 
